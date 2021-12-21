@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getMainData } from "../actions/main";
 
 export const initialState = {
@@ -7,6 +7,7 @@ export const initialState = {
   mainDataDone: false,
   mainDataError: null,
 };
+
 const mainSlice = createSlice({
   name: "main",
   initialState,
@@ -19,12 +20,12 @@ const mainSlice = createSlice({
         state.mainDataDone = false;
         state.mainDataError = null;
       })
-      .addCase(getMainData.fulfilled, (state, action) => {
+      .addCase(getMainData.fulfilled, (state, action: PayloadAction<any>) => {
         state.mainDataLoading = false;
         state.mainDataDone = true;
         state.mainPosts = action.payload;
       })
-      .addCase(getMainData.rejected, (state, action) => {
+      .addCase(getMainData.rejected, (state, action: PayloadAction<any>) => {
         state.mainDataLoading = false;
         state.mainDataError = action.payload;
       }),
