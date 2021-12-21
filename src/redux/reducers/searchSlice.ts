@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { search } from "../actions/search";
 
 export const initialState = {
@@ -19,12 +19,12 @@ const searchSlice = createSlice({
         state.searchDone = false;
         state.searchError = null;
       })
-      .addCase(search.fulfilled, (state, action) => {
+      .addCase(search.fulfilled, (state, action: PayloadAction<any>) => {
         state.searchLoading = false;
         state.searchDone = true;
         state.searchList = action.payload.posts;
       })
-      .addCase(search.rejected, (state, action) => {
+      .addCase(search.rejected, (state, action: PayloadAction<any>) => {
         state.searchLoading = false;
         state.searchList = action.payload;
       }),

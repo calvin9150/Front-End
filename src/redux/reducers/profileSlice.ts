@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { getMyPosts, getMyPolls } from "../actions/profile";
 
@@ -25,12 +25,12 @@ const profileSlice = createSlice({
         state.getMyPostsDone = false;
         state.getMyPostsError = null;
       })
-      .addCase(getMyPosts.fulfilled, (state, action) => {
+      .addCase(getMyPosts.fulfilled, (state, action: PayloadAction<any>) => {
         state.getMyPostsLoading = false;
         state.getMyPostsDone = true;
         state.myPosts = action.payload.posts;
       })
-      .addCase(getMyPosts.rejected, (state, action) => {
+      .addCase(getMyPosts.rejected, (state, action: PayloadAction<any>) => {
         state.getMyPostsLoading = false;
         state.getMyPostsError = action.payload;
       })
@@ -40,12 +40,12 @@ const profileSlice = createSlice({
         state.getMyPollsDone = false;
         state.getMyPollsError = null;
       })
-      .addCase(getMyPolls.fulfilled, (state, action) => {
+      .addCase(getMyPolls.fulfilled, (state, action: PayloadAction<any>) => {
         state.getMyPollsLoading = false;
         state.getMyPollsDone = true;
         state.myPolls = action.payload.posts;
       })
-      .addCase(getMyPolls.rejected, (state, action) => {
+      .addCase(getMyPolls.rejected, (state, action: PayloadAction<any>) => {
         state.getMyPollsLoading = false;
         state.getMyPollsError = action.payload;
       }),

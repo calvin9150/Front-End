@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
   checkIdDup,
@@ -10,7 +10,10 @@ import {
 } from "../actions/user";
 
 // 기본 state
-export const initialState = {
+export const initialState: {
+  userInfo: { nickname: string | null; userId: number | null };
+  [propName: string]: any;
+} = {
   userInfo: { nickname: "GUEST", userId: null },
   profileNick: null,
   loginLoading: false, // 로그인 시도 중
@@ -67,7 +70,7 @@ const userSlice = createSlice({
         state.loginDone = false;
         state.loginError = null;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
         localStorage.setItem("token", action.payload.token);
         const base64Payload = action.payload.token.split(".")[1];
         const payload = Buffer.from(base64Payload, "base64");
@@ -80,7 +83,7 @@ const userSlice = createSlice({
         state.userInfo.userId = result.id;
         state.loginDone = true;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action: PayloadAction<any>) => {
         state.loginLoading = false;
         state.loginError = action.payload;
       })
@@ -94,7 +97,7 @@ const userSlice = createSlice({
         state.signupLoading = false;
         state.signupDone = true;
       })
-      .addCase(signup.rejected, (state, action) => {
+      .addCase(signup.rejected, (state, action: PayloadAction<any>) => {
         state.signupLoading = false;
         state.signupError = action.payload;
       })
@@ -104,12 +107,12 @@ const userSlice = createSlice({
         state.checkIdDupDone = false;
         state.checkIdDupError = null;
       })
-      .addCase(checkIdDup.fulfilled, (state, action) => {
+      .addCase(checkIdDup.fulfilled, (state, action: PayloadAction<any>) => {
         state.checkIdDupLoading = false;
         state.checkIdDupDone = true;
         state.checkIdDupResult = action.payload.success;
       })
-      .addCase(checkIdDup.rejected, (state, action) => {
+      .addCase(checkIdDup.rejected, (state, action: PayloadAction<any>) => {
         state.checkIdDupLoading = false;
         state.checkIdDupError = action.payload;
         state.checkIdDupResult = action.payload?.success;
@@ -120,12 +123,12 @@ const userSlice = createSlice({
         state.checkNickDupDone = false;
         state.checkNickDupError = null;
       })
-      .addCase(checkNickDup.fulfilled, (state, action) => {
+      .addCase(checkNickDup.fulfilled, (state, action: PayloadAction<any>) => {
         state.checkNickDupLoading = false;
         state.checkNickDupDone = true;
         state.checkNickDupResult = action.payload.success;
       })
-      .addCase(checkNickDup.rejected, (state, action) => {
+      .addCase(checkNickDup.rejected, (state, action: PayloadAction<any>) => {
         state.checkNickDupLoading = false;
         state.checkNickDupError = action.payload;
         state.checkNickDupResult = action.payload?.success;
@@ -136,14 +139,14 @@ const userSlice = createSlice({
         state.updateNickDone = false;
         state.updateNickError = null;
       })
-      .addCase(updateNick.fulfilled, (state, action) => {
+      .addCase(updateNick.fulfilled, (state, action: PayloadAction<any>) => {
         state.updateNickLoading = false;
         state.updateNickDone = true;
         state.userInfo.nickname = action.payload.nickname;
         state.profileNick = action.payload.nickname;
         localStorage["nickname"] = action.payload.nickname;
       })
-      .addCase(updateNick.rejected, (state, action) => {
+      .addCase(updateNick.rejected, (state, action: PayloadAction<any>) => {
         state.updateNickLoading = false;
         state.updateNickDone = false;
         state.updateNickError = action.payload;
@@ -165,12 +168,15 @@ const userSlice = createSlice({
         state.getProfileNickDone = false;
         state.getProfileNickError = null;
       })
-      .addCase(getProfileNick.fulfilled, (state, action) => {
-        state.getProfileNickLoading = false;
-        state.getProfileNickDone = true;
-        state.profileNick = action.payload.nickname;
-      })
-      .addCase(getProfileNick.rejected, (state, action) => {
+      .addCase(
+        getProfileNick.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.getProfileNickLoading = false;
+          state.getProfileNickDone = true;
+          state.profileNick = action.payload.nickname;
+        },
+      )
+      .addCase(getProfileNick.rejected, (state, action: PayloadAction<any>) => {
         state.getProfileNickLoading = false;
         state.getProfileNickDone = false;
         state.getProfileNickError = action.payload;

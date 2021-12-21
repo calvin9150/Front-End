@@ -11,8 +11,6 @@ import multiPostSlice from "./reducers/multiCardSlice";
 import profileSlice from "./reducers/profileSlice";
 import searchSlice from "./reducers/searchSlice";
 import multiDetailSlice from "./reducers/multiDetailSlice";
-import commentSlice from "./reducers/commentSlice";
-import childCommentSlice from "./reducers/childCommentSlice";
 import paramsSlice from "./reducers/paramsSlice";
 import viewSlice from "./reducers/viewSlice";
 import eventBannerSlice from "./reducers/eventBannerSlice";
@@ -32,8 +30,6 @@ const reducer = combineReducers({
   params: paramsSlice.reducer,
   view: viewSlice.reducer,
   eventBanner: eventBannerSlice.reducer,
-  comment: commentSlice.reducer,
-  childComment: childCommentSlice.reducer,
 });
 
 const middlewares = [];
@@ -50,5 +46,7 @@ const store = configureStore({
   middleware: [...middlewares, ...getDefaultMiddleware()],
   devTools: env !== "production", // production 일 때는, devtools 사용 안하도록 설정
 });
+
+export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
