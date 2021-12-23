@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
+import { logger } from "redux-logger";
 
 //모듈 불러오기
 import userSlice from "./reducers/userSlice";
@@ -37,7 +38,6 @@ const middlewares = [];
 const env = process.env.NODE_ENV;
 
 if (env === "development") {
-  const { logger } = require("redux-logger");
   middlewares.push(logger);
 }
 

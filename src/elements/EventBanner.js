@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -7,7 +6,7 @@ import eventBanner from "../images/eventBanner.png";
 import { SetEventBanner } from "../redux/reducers/eventBannerSlice";
 import colors from "../shared/colors";
 
-const EventBanner = props => {
+const EventBanner = () => {
   const dispatch = useDispatch();
   const onBanner = useSelector(state => state.eventBanner.bannerStatus);
   const goToBanner = () => {
@@ -16,7 +15,6 @@ const EventBanner = props => {
   const closeBanner = () => {
     dispatch(SetEventBanner(false));
   };
-  useEffect(() => {});
   return (
     <Container>
       {onBanner === true ? (

@@ -7,8 +7,8 @@ export const getMainData = createAsyncThunk(
     try {
       const response = await api.get("/");
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+    } catch (err: unknown) {
+      return rejectWithValue(err);
     }
   },
 );
