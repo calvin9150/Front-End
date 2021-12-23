@@ -10,10 +10,36 @@ import {
 } from "../actions/user";
 
 // 기본 state
-export const initialState: {
+
+export type InitialState = {
   userInfo: { nickname: string | null; userId: number | null };
-  [propName: string]: any;
-} = {
+  profileNick: null | string;
+  loginLoading: boolean; // 로그인 시도 중
+  loginDone: boolean;
+  loginError: null | string;
+  signupLoading: boolean; // 회원가입 시도 중
+  signupDone: boolean;
+  signupError: null | string;
+  checkIdDupLoading: boolean; // 아이디중복 체크 중
+  checkIdDupDone: boolean;
+  checkIdDupError: null | string;
+  checkIdDupResult: null | string;
+  checkNickDupLoading: boolean; // 닉네임중복 체크 중
+  checkNickDupDone: boolean;
+  checkNickDupError: null | string;
+  checkNickDupResult: null | string;
+  mainDataLoading: boolean; // 메인페이지 정보 get 시도 중
+  mainDataDone: boolean;
+  mainDataError: null | string;
+  updateNickLoading: boolean;
+  updateNickDone: boolean;
+  updateNickError: null | string;
+  getProfileNickLoading: boolean;
+  getProfileNickDone: boolean;
+  getProfileNickError: null | string;
+};
+
+const initialState: InitialState = {
   userInfo: { nickname: "GUEST", userId: null },
   profileNick: null,
   loginLoading: false, // 로그인 시도 중

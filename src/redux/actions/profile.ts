@@ -9,10 +9,10 @@ export const getMyPosts = createAsyncThunk(
     try {
       const response = await api.get(`/profiles/${id}/posts`);
       return response.data;
-    } catch (err) {
+    } catch (err: unknown) {
       alert("로그인 후 접속이 가능합니다");
       history.push("/login");
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   },
 );
@@ -23,8 +23,8 @@ export const getMyPolls = createAsyncThunk(
     try {
       const response = await api.get(`/profiles/${id}/polls`);
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+    } catch (err: unknown) {
+      return rejectWithValue(err);
     }
   },
 );

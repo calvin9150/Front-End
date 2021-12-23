@@ -12,13 +12,12 @@ import MultiPagination from "../components/MultiPagination";
 import { SetView } from "../redux/reducers/viewSlice";
 import { SetParams } from "../redux/reducers/paramsSlice";
 
-const Multi = props => {
+const Multi = () => {
   const dispatch = useDispatch();
   const paramsId = useSelector(state => state.params.paramsId);
   const viewStatus = useSelector(state => state.view.viewStatus);
   const [select, setSelect] = useState("checkMulti");
   const [status, setStatus] = useState("Post");
-  const [loadDone, setLoadDone] = useState(false);
   const [changeView, setChangeView] = useState(viewStatus);
   const userNickname = localStorage.getItem("nickname");
 
@@ -27,11 +26,7 @@ const Multi = props => {
     multiPosting,
     multiPostComplete,
     PostDBDone,
-    PostingDBDone,
-    PostCompleteDBDone,
     PostDBLoading,
-    PostingDBLoading,
-    PostCompleteDBLoading,
   } = useSelector(state => state.multiCard);
 
   const cardList = multiPost && multiPost.multi;

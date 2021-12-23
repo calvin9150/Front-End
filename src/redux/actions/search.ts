@@ -8,10 +8,10 @@ export const search = createAsyncThunk(
     try {
       const response = await api.get(`/search`, { params: { keyword: value } });
       return response.data;
-    } catch (err) {
+    } catch (err: unknown) {
       alert("서버와의 통신이 원활하지 않습니다");
       history.replace("/");
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   },
 );
