@@ -2,26 +2,23 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillEdit } from "react-icons/ai";
+import { RouteComponentProps } from "react-router-dom";
 
 import LoadingBubble from "../elements/LoadingBubble";
 import { getMyPolls, getMyPosts } from "../redux/actions/profile";
 import { getProfileNick, updateNick } from "../redux/actions/user";
-import { history } from "../redux/configureStore";
+import { history, RootState } from "../redux/configureStore";
 
 import MainPagination from "../components/MainPagination";
 import { ReactComponent as CommonIcon } from "../images/CommonIcon.svg";
-import {
-  blue,
-  red,
-  mobile,
-  tablet,
-  gray5,
-  grayMultiply,
-  darkGray,
-} from "../shared/style";
+import { blue, red, mobile, gray5, grayMultiply } from "../shared/style";
 
-const Profile = props => {
-  const userId = props.match.params.user_id;
+type ProfileProps = {
+  user_id: string;
+};
+
+const Profile: React.FC<RouteComponentProps<ProfileProps>> = ({ match }) => {
+  const userId = match.params.user_id;
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -32,16 +29,17 @@ const Profile = props => {
     getMyPollsDone,
     getMyPostsLoading,
     getMyPollsLoading,
-  } = useSelector(state => state.profile);
-  const { userId: myId, nickname } = useSelector(state => state.user.userInfo);
+  } = useSelector((state: RootState) => state.profile);
+  const { userId: myId } = useSelector(
+    (state: RootState) => state.user.userInfo,
+  );
   const { profileNick, getProfileNickLoading } = useSelector(
-    state => state.user,
+    (state: RootState) => state.user,
   );
   const [clicked, setClicked] = useState("posts");
   const [nicknameClick, setNicknameClick] = useState(false);
   const [nickInput, setNickInput] = useState(profileNick);
   const [myPostsloadDone, setMyPostsloadDone] = useState(false);
-  const [myPollsloadDone, setMyPollsloadDone] = useState(false);
   const [pollsClicked, setPollsClicked] = useState(false);
 
   useEffect(() => {
@@ -55,11 +53,9 @@ const Profile = props => {
     if (getMyPostsDone && getMyPollsDone) {
       setTimeout(() => {
         setMyPostsloadDone(true);
-        setMyPollsloadDone(true);
       }, 100);
       return;
     }
-    setMyPollsloadDone(false);
     setMyPostsloadDone(false);
   }, [getMyPostsDone, getMyPollsDone]);
 
@@ -110,7 +106,7 @@ const Profile = props => {
             <>
               <input
                 onChange={onChangeNick}
-                defaultValue={profileNick}
+                defaultValue={profileNick || ""}
                 onKeyPress={onSubmitNick}
               />
               <AiFillEdit
@@ -246,7 +242,7 @@ const PostBtns = styled.div`
   font-weight: bold;
 `;
 
-const MyPostsBtn = styled.span`
+const MyPostsBtn = styled.span<{ clicked: string }>`
   cursor: pointer;
   padding: 14px;
   border-bottom: ${props =>
@@ -254,7 +250,7 @@ const MyPostsBtn = styled.span`
   color: ${props => (props.clicked === "posts" ? blue : gray5)};
 `;
 
-const MyPollsBtn = styled.span`
+const MyPollsBtn = styled.span<{ clicked: string }>`
   cursor: pointer;
   padding: 14px;
   border-bottom: ${props =>

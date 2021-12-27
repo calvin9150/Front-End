@@ -4,7 +4,7 @@ import { history } from "../configureStore";
 
 export const search = createAsyncThunk(
   "/search/keyword",
-  async (value, { rejectWithValue }) => {
+  async (value: string, { rejectWithValue }) => {
     try {
       const response = await api.get(`/search`, { params: { keyword: value } });
       return response.data;

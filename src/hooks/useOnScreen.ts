@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { MutableRefObject, useEffect, useMemo, useState } from "react";
 
-function useOnScreen(ref, thresInput) {
+function useOnScreen(ref: MutableRefObject<Element>, thresInput: number) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   const observer = useMemo(() => {

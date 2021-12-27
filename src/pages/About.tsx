@@ -1,15 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import {
-  blue,
-  red,
-  mobile,
-  tablet,
-  gray5,
-  grayMultiply,
-  darkGray,
-} from "../shared/style";
+import { blue, mobile, darkGray } from "../shared/style";
 
 const About = () => {
   return (

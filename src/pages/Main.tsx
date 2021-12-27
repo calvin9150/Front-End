@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { SetParams } from "../redux/reducers/paramsSlice";
 import MainSlick from "../components/MainSlick";
 import { getMainData } from "../redux/actions/main";
-import { history } from "../redux/configureStore";
+import { history, RootState } from "../redux/configureStore";
 import LoadingBubble from "../elements/LoadingBubble";
 import MainBanner from "../components/MainBanner";
-import { gray4, blue, red, mobile, tablet } from "../shared/style";
+import { gray4, blue, red, mobile } from "../shared/style";
 
 import { ReactComponent as GoAnt } from "../images/mainAnt.svg";
 
@@ -18,9 +18,11 @@ const Main = () => {
   const [loadDone, setLoadDone] = useState(false);
 
   const { either, multi, attendNum, postingNum, eitherNum, multiNum } =
-    useSelector(state => state.main.mainPosts);
-  const { mainDataLoading, mainDataDone } = useSelector(state => state.main);
-  const { nickname } = useSelector(state => state.user.userInfo);
+    useSelector((state: RootState) => state.main.mainPosts);
+  const { mainDataLoading, mainDataDone } = useSelector(
+    (state: RootState) => state.main,
+  );
+  const { nickname } = useSelector((state: RootState) => state.user.userInfo);
 
   useEffect(() => {
     if (mainDataDone) {
@@ -35,7 +37,7 @@ const Main = () => {
     dispatch(SetParams("all"));
   }, [dispatch]);
 
-  const goToWrite = select => {
+  const goToWrite = (select: string) => {
     if (nickname === "GUEST") {
       alert("로그인 후 가능합니다.");
       history.push("/login");
@@ -47,9 +49,9 @@ const Main = () => {
     }
   };
 
-  const onClickTop = useCallback(() => {
-    window.scroll(0, 0);
-  }, []);
+  // const onClickTop = useCallback(() => {
+  //   window.scroll(0, 0);
+  // }, []);
 
   return (
     <>
