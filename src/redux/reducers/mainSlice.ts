@@ -1,7 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getMainData } from "../actions/main";
 
-export const initialState = {
+export type MainPost = {
+  either: [];
+  multi: [];
+  attendNum: number;
+  postingNum: number;
+  eitherNum: number;
+  multiNum: number;
+};
+
+export type InitialState = {
+  mainPosts: MainPost[];
+  mainDataLoading: boolean;
+  mainDataDone: boolean;
+  mainDataError: null | string;
+};
+
+export const initialState: InitialState = {
   mainPosts: [],
   mainDataLoading: false,
   mainDataDone: false,

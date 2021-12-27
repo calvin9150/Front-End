@@ -5,7 +5,7 @@ import { history } from "../configureStore";
 
 export const getMyPosts = createAsyncThunk(
   "/profiles/:user_id/posts",
-  async (id, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const response = await api.get(`/profiles/${id}/posts`);
       return response.data;
@@ -19,7 +19,7 @@ export const getMyPosts = createAsyncThunk(
 
 export const getMyPolls = createAsyncThunk(
   "/profiles/:user_id/polls",
-  async (id, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const response = await api.get(`/profiles/${id}/polls`);
       return response.data;

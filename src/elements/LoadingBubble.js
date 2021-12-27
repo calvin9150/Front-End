@@ -1,11 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
 import sadIcon from "../images/sadAntIcon.png";
 
-import { blue, red, mobile, tablet, grayMultiply } from "../shared/style";
+import { mobile, grayMultiply } from "../shared/style";
 
-const LoadingBubble = ({ position, height, left }) => (
+const LoadingBubble = ({ position, height }) => (
   <StyledLoading position={position} height={height}>
     <div className="lds-ellipsis">
       <img className="fit-picture" src={sadIcon} alt="icon" />

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useInput from "../hooks/useInput";
 import { signup, checkIdDup, checkNickDup } from "../redux/actions/user";
-import { history } from "../redux/configureStore";
+import { history, RootState } from "../redux/configureStore";
 
 import { ReactComponent as Logo } from "../images/logo.svg";
 import { ReactComponent as Symbol } from "../images/symbolBlue.svg";
@@ -19,8 +19,6 @@ import {
 } from "../shared/style";
 
 const Signup = () => {
-  const isLoggedIn = useSelector(state => state.user.userInfo.userId);
-
   const dispatch = useDispatch();
 
   const {
@@ -28,13 +26,13 @@ const Signup = () => {
     checkIdDupLoading,
     checkNickDupLoading,
     checkNickDupResult,
-  } = useSelector(state => state.user);
+  } = useSelector((state: RootState) => state.user);
 
-  const [id, onChangeId] = useInput("");
-  const [nickname, onChangeNickname] = useInput("");
-  const [password, setPassword] = useInput("");
-  const [passwordCheck, setPasswordCheck] = useInput("");
-  const [age, setAge] = useInput("");
+  const [id, onChangeId] = useInput(null);
+  const [nickname, onChangeNickname] = useInput(null);
+  const [password, setPassword] = useInput(null);
+  const [passwordCheck, setPasswordCheck] = useInput(null);
+  const [age, setAge] = useInput(null);
   const [idError, setIdError] = useState(false);
   const [idNotice, setIdNotice] = useState(true);
   const [idDupCheck, setIdDupCheck] = useState(false);
@@ -54,21 +52,21 @@ const Signup = () => {
   const ageRef = useRef();
 
   useEffect(() => {
-    if (id.trim()) {
+    if (id?.trim()) {
       setIdNotice(false);
     }
     setIdDupCheck(false);
   }, [id]);
 
   useEffect(() => {
-    if (nickname.trim()) {
+    if (nickname?.trim()) {
       setNickNotice(false);
     }
     setNickDupCheck(false);
   }, [nickname]);
 
   useEffect(() => {
-    if (password.trim()) {
+    if (password?.trim()) {
       setPasswordNotice(false);
     }
   }, [password]);
@@ -108,12 +106,12 @@ const Signup = () => {
   }, [idFilter, id]);
 
   const nickChecker = useCallback(() => {
-    if (!nickname.trim()) {
+    if (!nickname?.trim()) {
       setNickError(true);
       setNickNotice(true);
       return false;
     }
-    if (nickname.length < 2 || nickname.length > 7) {
+    if (nickname?.length < 2 || nickname?.length > 7) {
       setNickLength(true);
       setNickNotice(false);
       setNickError(true);
@@ -127,7 +125,7 @@ const Signup = () => {
   }, [nickname]);
 
   const pwChecker = useCallback(() => {
-    if (!password.trim()) {
+    if (!password?.trim()) {
       setPasswordError(true);
       return false;
     }
@@ -149,7 +147,7 @@ const Signup = () => {
   }, [password, passwordCheck]);
 
   const ageChecker = useCallback(() => {
-    if (!age.trim()) {
+    if (!age?.trim()) {
       setAgeError(true);
       return false;
     }
@@ -160,11 +158,11 @@ const Signup = () => {
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      if (idError || !id.trim()) {
+      if (idError || !id?.trim()) {
         idRef.current.focus();
         return;
       }
-      if (nickError || !nickname.trim()) {
+      if (nickError || !nickname?.trim()) {
         nickRef.current.focus();
         return;
       }
@@ -183,7 +181,7 @@ const Signup = () => {
 
       if (!pwEqualChecker()) return;
       // if (!ageChecker()) return;
-      if (!nickname.trim()) {
+      if (!nickname?.trim()) {
         return;
       }
       if (!nickDupCheck || !idDupCheck || passwordError) {

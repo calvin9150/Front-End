@@ -47,6 +47,6 @@ const store = configureStore({
   devTools: env !== "production", // production 일 때는, devtools 사용 안하도록 설정
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof reducer>;
 
 export default store;

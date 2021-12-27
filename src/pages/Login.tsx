@@ -1,25 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { login } from "../redux/actions/user";
-import { history } from "../redux/configureStore";
+import { history, RootState } from "../redux/configureStore";
 
 import { ReactComponent as Logo } from "../images/logo.svg";
 import { ReactComponent as Symbol } from "../images/symbolBlue.svg";
-import {
-  blue,
-  red,
-  mobile,
-  tablet,
-  gray5,
-  grayMultiply,
-} from "../shared/style";
+import { blue, red, mobile, gray5, grayMultiply } from "../shared/style";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(state => state.user.userInfo.userId);
-  const { loginError } = useSelector(state => state.user);
+
+  const { loginError } = useSelector((state: RootState) => state.user);
 
   const [id, onChangeId] = useState("");
   const [password, onChangePassword] = useState("");

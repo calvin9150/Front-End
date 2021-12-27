@@ -5,7 +5,7 @@ import { history } from "../configureStore";
 
 export const login = createAsyncThunk(
   "/users/login",
-  async (data: { userId: string; pw: number }, { rejectWithValue }) => {
+  async (data: { userId: string; pw: string }, { rejectWithValue }) => {
     try {
       const response = await api.post("/users/login", data);
       history.push("/");
@@ -65,7 +65,7 @@ export const checkNickDup = createAsyncThunk(
 
 export const updateNick = createAsyncThunk(
   "/profiles/updateNick",
-  async (nickname: string, { rejectWithValue }) => {
+  async (nickname: string | null, { rejectWithValue }) => {
     try {
       const response = await api.patch("/profiles/nick", { nickname });
       return response.data;
@@ -77,7 +77,7 @@ export const updateNick = createAsyncThunk(
 
 export const getProfileNick = createAsyncThunk(
   "/profiles/getnick",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const response = await api.get(`/profiles/${id}`);
       return response.data;
