@@ -1,9 +1,15 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, ChangeEvent } from "react";
 
-export default (initValue = null) => {
-  const [value, setter] = useState(initValue);
-  const handler = useCallback(e => {
-    setter(e.target.value);
+type UserInputProps = [string, (e: ChangeEvent) => void];
+
+const useInput = (initialValue: string): UserInputProps => {
+  const [userFormInput, setUserFormInput] = useState(initialValue);
+
+  const onChangeForm = useCallback(e => {
+    setUserFormInput(e.target.value);
   }, []);
-  return [value, handler, setter];
+
+  return [userFormInput, onChangeForm];
 };
+
+export default useInput;

@@ -11,14 +11,21 @@ export type MainPost = {
 };
 
 export type InitialState = {
-  mainPosts: MainPost[];
+  mainPost: MainPost;
   mainDataLoading: boolean;
   mainDataDone: boolean;
   mainDataError: null | string;
 };
 
 export const initialState: InitialState = {
-  mainPosts: [],
+  mainPost: {
+    either: [],
+    multi: [],
+    attendNum: 0,
+    postingNum: 0,
+    eitherNum: 0,
+    multiNum: 0,
+  },
   mainDataLoading: false,
   mainDataDone: false,
   mainDataError: null,
@@ -31,19 +38,22 @@ const mainSlice = createSlice({
   extraReducers: builder =>
     builder
       // getMainData
-      .addCase(getMainData.pending, state => {
+      .addCase(getMainData.pending, (state: InitialState) => {
         state.mainDataLoading = true;
         state.mainDataDone = false;
         state.mainDataError = null;
       })
-      .addCase(getMainData.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(
+        getMainData.fulfilled,
+        (state: InitialState, action: PayloadAction<MainPost>) => {
+          state.mainDataLoading = false;
+          state.mainDataDone = true;
+          state.mainPost = action.payload;
+        },
+      )
+      .addCase(getMainData.rejected, (state: InitialState, action) => {
         state.mainDataLoading = false;
-        state.mainDataDone = true;
-        state.mainPosts = action.payload;
-      })
-      .addCase(getMainData.rejected, (state, action: PayloadAction<any>) => {
-        state.mainDataLoading = false;
-        state.mainDataError = action.payload;
+        state.mainDataError = action.error.message || "error";
       }),
 });
 

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosResponse } from "axios";
 
 import api from "../../shared/api";
 import { history } from "../configureStore";
@@ -41,13 +42,12 @@ export const signup = createAsyncThunk(
 
 export const checkIdDup = createAsyncThunk(
   "/users/signup/id",
-  async (data: { userId: string }, { rejectWithValue }) => {
-    try {
-      const response = await api.post("/users/signup/id", data);
-      return response.data;
-    } catch (err: unknown) {
-      return rejectWithValue(err);
-    }
+  async (data): Promise<{ success: boolean } | null> => {
+    const response: AxiosResponse<{ success: boolean } | null> = await api.post(
+      "/users/signup/id",
+      data,
+    );
+    return response.data;
   },
 );
 
