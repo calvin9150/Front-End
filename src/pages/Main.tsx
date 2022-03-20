@@ -18,7 +18,7 @@ const Main = () => {
   const [loadDone, setLoadDone] = useState(false);
 
   const { either, multi, attendNum, postingNum, eitherNum, multiNum } =
-    useSelector((state: RootState) => state.main.mainPosts);
+    useSelector((state: RootState) => state.main.mainPost);
   const { mainDataLoading, mainDataDone } = useSelector(
     (state: RootState) => state.main,
   );
@@ -298,7 +298,7 @@ const StyledGoAnt = styled(GoAnt)`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ height?: string; justify?: string }>`
   display: flex;
   justify-content: ${props => (props.justify ? props.justify : "center")};
   width: 100%;

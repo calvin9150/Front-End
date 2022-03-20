@@ -28,14 +28,14 @@ const Signup = () => {
     checkNickDupResult,
   } = useSelector((state: RootState) => state.user);
 
-  const [id, onChangeId] = useInput(null);
-  const [nickname, onChangeNickname] = useInput(null);
-  const [password, setPassword] = useInput(null);
-  const [passwordCheck, setPasswordCheck] = useInput(null);
-  const [age, setAge] = useInput(null);
+  const [id, onChangeId] = useInput("");
+  const [nickname, onChangeNickname] = useInput("");
+  const [password, setPassword] = useInput("");
+  const [passwordCheck, setPasswordCheck] = useInput("");
+  const [age, setAge] = useInput("");
   const [idError, setIdError] = useState(false);
   const [idNotice, setIdNotice] = useState(true);
-  const [idDupCheck, setIdDupCheck] = useState(false);
+  const [idDupCheck, setIdDupCheck] = useState<boolean>(false);
   const [nickNotice, setNickNotice] = useState(true);
   const [nickDupCheck, setNickDupCheck] = useState(false);
   const [nickError, setNickError] = useState(false);

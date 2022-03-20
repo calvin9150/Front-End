@@ -23,7 +23,7 @@ export type InitialState = {
   checkIdDupLoading: boolean; // 아이디중복 체크 중
   checkIdDupDone: boolean;
   checkIdDupError: null | string;
-  checkIdDupResult: null | string;
+  checkIdDupResult: null | boolean;
   checkNickDupLoading: boolean; // 닉네임중복 체크 중
   checkNickDupDone: boolean;
   checkNickDupError: null | string;
@@ -133,11 +133,19 @@ const userSlice = createSlice({
         state.checkIdDupDone = false;
         state.checkIdDupError = null;
       })
-      .addCase(checkIdDup.fulfilled, (state, action: PayloadAction<any>) => {
-        state.checkIdDupLoading = false;
-        state.checkIdDupDone = true;
-        state.checkIdDupResult = action.payload.success;
-      })
+      .addCase(
+        checkIdDup.fulfilled,
+        (
+          state: InitialState,
+          action: PayloadAction<null | { success: boolean }>,
+        ) => {
+          state.checkIdDupLoading = false;
+          state.checkIdDupDone = true;
+          state.checkIdDupResult = action.payload
+            ? action.payload.success
+            : null;
+        },
+      )
       .addCase(checkIdDup.rejected, (state, action: PayloadAction<any>) => {
         state.checkIdDupLoading = false;
         state.checkIdDupError = action.payload;
